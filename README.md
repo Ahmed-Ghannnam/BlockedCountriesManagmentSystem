@@ -20,7 +20,7 @@ A .NET Core Web API to manage blocked countries and validate IP addresses using 
 
 ## Tech Stack
 
-- [.NET Core 7/8/9 Web API](https://dotnet.microsoft.com/en-us/)
+- [.NET Core 7 Web API](https://dotnet.microsoft.com/en-us/)
 - `HttpClient` with async/await for external API calls
 - `ConcurrentDictionary` for thread-safe in-memory data
 - [Swagger / Swashbuckle](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) for API docs
@@ -33,53 +33,49 @@ A .NET Core Web API to manage blocked countries and validate IP addresses using 
 ### Prerequisites
 
 - [.NET SDK 7.0 or later](https://dotnet.microsoft.com/en-us/download)
-- API key from [ipapi.co](https://ipapi.co/) or [IPGeolocation.io](https://ipgeolocation.io/)
+- API key from [IPGeolocation.io](https://ipgeolocation.io/)
 
 ### Setup
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/yourusername/BlockedCountriesAPI.git
-   cd BlockedCountriesAPI
+   git clone https://github.com/yourusername/BlockedCountriesManagmentSystem.git
+   cd BlockedCountriesManagmentSystem/BlockedCountries.API
 
 
-2. Add your API key to appsettings.json:
+2. Restore NuGet packages:
+   dotnet restore
 
-{
-  "GeoApi": {
-   "BaseUrl": "https://api.ipgeolocation.io/ipgeo",
-    "ApiKey": "a6d28a71143541f89d1b8dd5e35732cc"
-  }
-}
+3. Add your API key to appsettings.json:
+   {
+     "GeoApi": {
+      "BaseUrl": "https://api.ipgeolocation.io/ipgeo",
+       "ApiKey": "a6d28a71143541f89d1b8dd5e35732cc"
+     }
+   }
 
 4. Build and run the API:
-
-dotnet build
-dotnet run
+   dotnet build
+   dotnet run
 
 5. Open Swagger UI in your browser for interactive API docs and testing:
-
-https://localhost:{port}/swagger
+   https://localhost:{port}/swagger
 
 6. API Endpoints Overview
+   Endpoint	Method	Description
+   /api/countries/block	POST	Block a country permanently
+   /api/countries/block/{countryCode}	DELETE	Remove a country from the blocked list
+   /api/countries/blocked	GET	List all blocked countries (supports paging, filtering)
+   /api/countries/block-range	POST	Block multiple countries at once
+   /api/countries/temporal-block	POST	Temporarily block a country for a specific duration
+   /api/ip/lookup	GET	Lookup IP address info (country, ISP, etc.)
+   /api/ip/check-block	GET	Check if the caller IP is blocked
+   /api/logs/blocked-attempts	GET	Get paginated list of blocked IP access attempts
 
-Endpoint	Method	Description
-/api/countries/block	POST	Block a country permanently
-/api/countries/block/{countryCode}	DELETE	Remove a country from the blocked list
-/api/countries/blocked	GET	List all blocked countries (supports paging, filtering)
-/api/countries/block-range	POST	Block multiple countries at once
-/api/countries/temporal-block	POST	Temporarily block a country for a specific duration
-/api/ip/lookup	GET	Lookup IP address info (country, ISP, etc.)
-/api/ip/check-block	GET	Check if the caller IP is blocked
-/api/logs/blocked-attempts	GET	Get paginated list of blocked IP access attempts
-
-
-7. Pagination and Filtering
-
-Use page and pageSize query parameters for paginated endpoints.
-Filter blocked countries by country code search.
-Filter blocked attempts logs by IP address or country code.
+7. Pagination and Filtering   
+   Use page and pageSize query parameters for paginated endpoints.
+   Filter blocked countries by country code search.
+   Filter blocked attempts logs by IP address or country code.
 
 8. Contributing
-Contributions are welcome! Please fork the repo and submit pull requests.
+   Contributions are welcome! Please fork the repo and submit pull requests.
